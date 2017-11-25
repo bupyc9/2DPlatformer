@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Character : Unit {
     [SerializeField] private float speed = 3.0f;
@@ -39,29 +40,31 @@ public class Character : Unit {
     }
 
     private void Update() {
-        if (isGrounded) State = CharState.Idle;
+        if(isGrounded) State = CharState.Idle;
 
-        if (Input.GetButton("Horizontal")) {
+        if(CrossPlatformInputManager.GetAxis("Horizontal") != 0) {
             Run();
         }
 
-        if (isGrounded && Input.GetButtonDown("Jump")) {
+        if (isGrounded && CrossPlatformInputManager.GetButtonDown("Jump")) {
             Jump();
         }
 
-        if (Input.GetButtonDown("Fire1")) {
+        if (CrossPlatformInputManager.GetButtonDown("Fire1")) {
             Shoot();
         }
     }
 
     private void Run() {
-        var direction = transform.right * Input.GetAxis("Horizontal");
+        var direction = transform.right * CrossPlatformInputManager.GetAxis("Horizontal");
+
         transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
         sprite.flipX = direction.x < 0.0f;
         if (isGrounded) State = CharState.Run;
     }
 
     private void Jump() {
+        Debug.Log(transform.up * jumpForce);
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
@@ -84,7 +87,7 @@ public class Character : Unit {
     }
 
     private void CheckGround() {
-        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.3f);
+        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.1f);
 
         isGrounded = colliders.Length > 1;
         if (!isGrounded) State = CharState.Jump;

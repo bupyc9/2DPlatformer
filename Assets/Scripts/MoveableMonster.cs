@@ -42,7 +42,7 @@ public class MoveableMonster : Monster {
 
     private void Move() {
         var colliders = Physics2D.OverlapCircleAll(transform.position + transform.up * 0.5f + transform.right * direction.x * 0.5f, 0.1f);
-
+        
         if(colliders.Length > 0 && colliders.All(x => !x.GetComponent<Character>()) && colliders.All(x => !x.GetComponent<Bullet>())) {
             direction *= -1.0f;
         }
