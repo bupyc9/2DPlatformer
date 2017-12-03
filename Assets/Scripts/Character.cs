@@ -8,7 +8,7 @@ public class Character : Unit {
     public int Lives {
         get { return lives; }
         set {
-            if (value < 5) lives = value;
+            if(value < 5) lives = value;
             livesBar.Refresh();
         }
     }
@@ -64,7 +64,6 @@ public class Character : Unit {
     }
 
     private void Jump() {
-        Debug.Log(transform.up * jumpForce);
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 

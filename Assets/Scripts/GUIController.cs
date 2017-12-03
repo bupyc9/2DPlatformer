@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GUIController : MonoBehaviour {
-    public void Fire() {
-        CrossPlatformInputManager.SetButtonDown("Fire1");
+    public void Reload () {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
